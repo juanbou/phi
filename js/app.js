@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Grid generation (Deterministic)
     function generateMatrixString() {
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const chars = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
         let grid = "";
         for (let i = 0; i < 1000; i++) {
             grid += chars.charAt(Math.floor(bgRandom() * chars.length));
@@ -291,15 +291,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // New: Calculate Position based on Word (Alphabetical position strict 2-digits)
     if (searchWordBtn && wordSearchInput) {
         searchWordBtn.addEventListener('click', () => {
-            const val = wordSearchInput.value.trim().toUpperCase();
+            // Normalize accents (but keep Ñ intact as the matrix natively supports it)
+            const rawVal = wordSearchInput.value.trim().toUpperCase();
+            const val = rawVal
+                .replace(/[ÁÄÂÀ]/g, 'A')
+                .replace(/[ÉËÊÈ]/g, 'E')
+                .replace(/[ÍÏÎÌ]/g, 'I')
+                .replace(/[ÓÖÔÒ]/g, 'O')
+                .replace(/[ÚÜÛÙ]/g, 'U');
+
             if (!val) return;
 
-            // Alphabetical position calculation (A=01, B=02, ..., Z=26 strict 2-digits)
+            const SPANISH_ALPHABET = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+
+            // Alphabetical position calculation (A=01, ..., N=14, Ñ=15, ..., Z=27 strict 2-digits)
             let encodedMid = "";
             for (let i = 0; i < val.length; i++) {
-                const charCode = val.charCodeAt(i);
-                if (charCode >= 65 && charCode <= 90) { // A-Z
-                    const pos = charCode - 64;
+                const pos = SPANISH_ALPHABET.indexOf(val[i]) + 1;
+                if (pos > 0) {
                     // Pad with leading zero if single digit
                     encodedMid += pos < 10 ? `0${pos}` : pos.toString();
                 }
@@ -339,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!lettersBg) return;
 
         // Phase 4 Requirement: Generate a completely new matrix background for every search to simulate scanning a new section
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const chars = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
         let newGridText = "";
         for (let i = 0; i < 1000; i++) {
             newGridText += chars.charAt(Math.floor(Math.random() * chars.length));
