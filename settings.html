@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phi Project | Secret Settings</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            width: 100%;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Configuration Panel</h1>
+            <p class="subtitle">Modify the hidden parameters</p>
+        </header>
+        <section class="glass-card">
+            <div class="settings-container">
+                <div class="form-group">
+                    <label for="forceWordsInput">Palabras de Forzaje (Matriz)</label>
+                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.5rem;">Palabras separadas por comas.
+                        Estas aparecerán siempre primeras al escanear.</p>
+                    <input type="text" id="forceWordsInput" class="settings-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="fillerWordsInput">Palabras Místicas de Relleno (Matriz)</label>
+                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.5rem;">Palabras separadas por comas. Se
+                        usarán para rellenar la lista hasta 100 resultados.</p>
+                    <textarea id="fillerWordsInput" class="settings-textarea" style="height: 100px;"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="moabtTextInput">Texto MOABT (Contexto)</label>
+                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.5rem;">El artículo principal sobre Phi.
+                        Asegúrate de que tu palabra forzada sea la más larga de todo el texto (más de 9 letras).</p>
+                    <textarea id="moabtTextInput" class="settings-textarea"></textarea>
+                </div>
+                <div class="settings-actions">
+                    <button id="cancelBtn" class="btn-secondary">Cancelar</button>
+                    <button id="resetBtn" class="btn-secondary" style="border-color: #ff5555; color: #ff5555;">Restaurar
+                        por Defecto</button>
+                    <button id="saveBtn">Guardar Ajustes</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="js/settings.js"></script>
+</body>
+
+</html>
